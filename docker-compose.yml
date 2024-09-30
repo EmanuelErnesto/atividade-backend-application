@@ -1,0 +1,22 @@
+services:
+  db:
+    image: mysql
+    container_name: project-database
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+    ports:
+      - ${DATABASE_PORT}:3306
+    volumes:
+      - .docker/mysql/data:/var/lib/mysql
+
+  redis:
+    container_name: webapi-redis-A
+    image: redis:latest
+    restart: unless-stopped
+    ports:
+      - ${REDIS_PORT-6379}:6379
+    volumes:
+      - .docker/redis/data:/data
+
